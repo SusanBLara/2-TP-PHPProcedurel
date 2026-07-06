@@ -6,5 +6,7 @@ define('CONNEX_DIR', 'LIB/connex.php');
 $config = array(
     'default_controller' => 'forum',
     'default_function' => 'accueil',
+    // Leave empty to auto-detect the project base path from the current URL.
+    'base_url' => ''
 );
 ?>

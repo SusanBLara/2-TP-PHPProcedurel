@@ -16,8 +16,8 @@ $function = preg_replace('/[^a-z0-9_-]/', '', $function);
 $controller_file = 'controllers/' . $controller . 'Controller.php';
 
 if (!file_exists($controller_file)) {
-    trigger_error('Could not find this file');
-    exit();
+    echo 'Controleur introuvable.';
+    exit;
 }
 
 require_once($controller_file);
@@ -25,8 +25,8 @@ require_once($controller_file);
 $controller_function = strtolower($controller) . '_controller_' . $function;
 
 if (!function_exists($controller_function)) {
-    trigger_error('Could not find this function');
-    exit();
+    echo 'Action introuvable.';
+    exit;
 }
 
 $data = call_user_func($controller_function, $_REQUEST, $connex);

@@ -21,6 +21,11 @@ function creerArticleForum(mysqli $connex, string $titre, string $article, int $
     $sql = 'INSERT INTO forum (titre, article, date_publication, id_utilisateur) VALUES (?, ?, NOW(), ?)';
 
     $stmt = mysqli_prepare($connex, $sql);
+
+    if (!$stmt) {
+        return false;
+    }
+
     mysqli_stmt_bind_param($stmt, 'ssi', $titre, $article, $utilisateurId);
 
     return mysqli_stmt_execute($stmt);
@@ -30,6 +35,11 @@ function recupererArticleParIdEtUtilisateur(mysqli $connex, int $idForum, int $u
 {
     $sql = 'SELECT * FROM forum WHERE id_forum = ? AND id_utilisateur = ?';
     $stmt = mysqli_prepare($connex, $sql);
+
+    if (!$stmt) {
+        return null;
+    }
+
     mysqli_stmt_bind_param($stmt, 'ii', $idForum, $utilisateurId);
     mysqli_stmt_execute($stmt);
 
@@ -48,6 +58,11 @@ function modifierArticleForum(
 ): bool {
     $sql = 'UPDATE forum SET titre = ?, article = ? WHERE id_forum = ? AND id_utilisateur = ?';
     $stmt = mysqli_prepare($connex, $sql);
+
+    if (!$stmt) {
+        return false;
+    }
+
     mysqli_stmt_bind_param($stmt, 'ssii', $titre, $article, $idForum, $utilisateurId);
 
     return mysqli_stmt_execute($stmt);
@@ -57,6 +72,11 @@ function supprimerArticleForum(mysqli $connex, int $idForum, int $utilisateurId)
 {
     $sql = 'DELETE FROM forum WHERE id_forum = ? AND id_utilisateur = ?';
     $stmt = mysqli_prepare($connex, $sql);
+
+    if (!$stmt) {
+        return false;
+    }
+
     mysqli_stmt_bind_param($stmt, 'ii', $idForum, $utilisateurId);
 
     return mysqli_stmt_execute($stmt);

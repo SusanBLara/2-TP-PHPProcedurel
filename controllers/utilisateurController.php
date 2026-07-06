@@ -2,9 +2,16 @@
 
 require_once __DIR__ . '/../models/utilisateurModel.php';
 
-function utilisateur_controller_connexion(array $request, mysqli $connex): array
+function utilisateur_controller_connexion(array $request, ?mysqli $connex): array
 {
     $message = '';
+
+    if (!$connex) {
+        return [
+            'page' => 'utilisateur-connexion',
+            'message' => 'Connexion impossible: la base de donnees est indisponible.',
+        ];
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nomUtilisateur = trim($_POST['nom_utilisateur'] ?? '');
@@ -19,7 +26,7 @@ function utilisateur_controller_connexion(array $request, mysqli $connex): array
             $_SESSION['nom'] = $utilisateur['nom'];
             $_SESSION['fingerPrint'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
-            header('Location: index.php?controller=forum&function=accueil');
+            header('Location: ' . app_base_path() . '/index.php?controller=forum&function=accueil');
             exit;
         }
 
@@ -32,9 +39,16 @@ function utilisateur_controller_connexion(array $request, mysqli $connex): array
     ];
 }
 
-function utilisateur_controller_inscription(array $request, mysqli $connex): array
+function utilisateur_controller_inscription(array $request, ?mysqli $connex): array
 {
     $message = '';
+
+    if (!$connex) {
+        return [
+            'page' => 'utilisateur-inscription',
+            'message' => 'Inscription impossible: la base de donnees est indisponible.',
+        ];
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nom = trim($_POST['nom'] ?? '');
@@ -63,11 +77,11 @@ function utilisateur_controller_inscription(array $request, mysqli $connex): arr
     ];
 }
 
-function utilisateur_controller_deconnexion(array $request, mysqli $connex): array
+function utilisateur_controller_deconnexion(array $request, ?mysqli $connex): void
 {
     session_unset();
     session_destroy();
 
-    header('Location: index.php?controller=utilisateur&function=connexion');
+    header('Location: ' . app_base_path() . '/index.php?controller=utilisateur&function=connexion');
     exit;
 }

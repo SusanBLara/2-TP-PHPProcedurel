@@ -4,6 +4,11 @@ function trouverUtilisateurParNom(mysqli $connex, string $nomUtilisateur): ?arra
 {
     $sql = 'SELECT * FROM utilisateur WHERE nom_utilisateur = ?';
     $stmt = mysqli_prepare($connex, $sql);
+
+    if (!$stmt) {
+        return null;
+    }
+
     mysqli_stmt_bind_param($stmt, 's', $nomUtilisateur);
     mysqli_stmt_execute($stmt);
 
@@ -24,6 +29,11 @@ function creerUtilisateur(
 
     $sql = 'INSERT INTO utilisateur (nom, nom_utilisateur, mot_de_passe, date_naissance) VALUES (?, ?, ?, ?)';
     $stmt = mysqli_prepare($connex, $sql);
+
+    if (!$stmt) {
+        return false;
+    }
+
     mysqli_stmt_bind_param($stmt, 'ssss', $nom, $nomUtilisateur, $motDePasseHash, $dateNaissance);
 
     try {
