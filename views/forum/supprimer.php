@@ -12,7 +12,7 @@
 
 <p>Voulez-vous vraiment supprimer cet article? Cette action est irréversible.</p>
 
-<form method="post" action="index.php?page=forum-supprimer&id=<?= (int) ($data['article']['id_forum'] ?? 0) ?>">
+<form method="post" action="index.php?controller=forum&function=supprimer&id=<?= (int) ($data['article']['id_forum'] ?? 0) ?>">
 	<button type="submit">Oui, supprimer</button>
-	<a href="index.php?page=forum-accueil">Annuler</a>
+	<a href="index.php?controller=forum&function=accueil">Annuler</a>
 </form>

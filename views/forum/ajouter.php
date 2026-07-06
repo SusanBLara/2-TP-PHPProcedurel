@@ -2,7 +2,7 @@
 
 <p><?= htmlspecialchars($data['message'] ?? '') ?></p>
 
-<form method="post" action="index.php?page=forum-ajouter">
+<form method="post" action="index.php?controller=forum&function=ajouter">
     <label>Titre</label>
     <input type="text" name="titre" value="<?= htmlspecialchars($_POST['titre'] ?? '') ?>" required>
 

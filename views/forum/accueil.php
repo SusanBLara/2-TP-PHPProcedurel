@@ -17,8 +17,8 @@
             $_SESSION['utilisateur_id'] == $article['id_utilisateur']
         ) : ?>
             <p>
-                <a href="index.php?page=forum-modifier&id=<?= (int) $article['id_forum'] ?>">Modifier</a>
-                <a href="index.php?page=forum-supprimer&id=<?= (int) $article['id_forum'] ?>">Supprimer</a>
+                <a href="index.php?controller=forum&function=modifier&id=<?= (int) $article['id_forum'] ?>">Modifier</a>
+                <a href="index.php?controller=forum&function=supprimer&id=<?= (int) $article['id_forum'] ?>">Supprimer</a>
             </p>
         <?php endif; ?>
     </article>

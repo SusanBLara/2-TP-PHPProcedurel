@@ -2,7 +2,7 @@
 
 <p><?= htmlspecialchars($data['message'] ?? '') ?></p>
 
-<form method="post" action="index.php?page=inscription">
+<form method="post" action="index.php?controller=utilisateur&function=inscription">
     <label>Nom</label>
     <input type="text" name="nom" required>
 

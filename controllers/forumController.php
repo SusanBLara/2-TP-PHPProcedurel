@@ -1,9 +1,9 @@
 <?php
 
 require_once __DIR__ . '/../models/forumModel.php';
-require_once __DIR__ . '/../library/check-session.php';
+require_once __DIR__ . '/../LIB/check-session.php';
 
-function forumAccueilController(mysqli $connex): array
+function forum_controller_accueil(array $request, mysqli $connex): array
 {
     return [
         'page' => 'forum-accueil',
@@ -11,7 +11,7 @@ function forumAccueilController(mysqli $connex): array
     ];
 }
 
-function forumAjouterController(mysqli $connex): array
+function forum_controller_ajouter(array $request, mysqli $connex): array
 {
     verifierSessionUtilisateur();
 
@@ -24,7 +24,7 @@ function forumAjouterController(mysqli $connex): array
 
         if ($titre !== '' && $article !== '') {
             creerArticleForum($connex, $titre, $article, $utilisateurId);
-            header('Location: index.php?page=forum-accueil');
+            header('Location: index.php?controller=forum&function=accueil');
             exit;
         }
 
@@ -37,11 +37,11 @@ function forumAjouterController(mysqli $connex): array
     ];
 }
 
-function forumModifierController(mysqli $connex): array
+function forum_controller_modifier(array $request, mysqli $connex): array
 {
     verifierSessionUtilisateur();
 
-    $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+    $id = isset($request['id']) ? (int) $request['id'] : 0;
     $utilisateurId = (int) $_SESSION['utilisateur_id'];
 
     $article = recupererArticleParIdEtUtilisateur($connex, $id, $utilisateurId);
@@ -55,7 +55,7 @@ function forumModifierController(mysqli $connex): array
         $texte = trim($_POST['article'] ?? '');
 
         modifierArticleForum($connex, $id, $utilisateurId, $titre, $texte);
-        header('Location: index.php?page=forum-accueil');
+        header('Location: index.php?controller=forum&function=accueil');
         exit;
     }
 
@@ -65,11 +65,11 @@ function forumModifierController(mysqli $connex): array
     ];
 }
 
-function forumSupprimerController(mysqli $connex): array
+function forum_controller_supprimer(array $request, mysqli $connex): array
 {
     verifierSessionUtilisateur();
 
-    $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+    $id = isset($request['id']) ? (int) $request['id'] : 0;
     $utilisateurId = (int) $_SESSION['utilisateur_id'];
 
     $article = recupererArticleParIdEtUtilisateur($connex, $id, $utilisateurId);
@@ -81,7 +81,7 @@ function forumSupprimerController(mysqli $connex): array
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         supprimerArticleForum($connex, $id, $utilisateurId);
 
-        header('Location: index.php?page=forum-accueil');
+        header('Location: index.php?controller=forum&function=accueil');
         exit;
     }
 

@@ -2,7 +2,7 @@
 
 <p><?= htmlspecialchars($data['message'] ?? '') ?></p>
 
-<form method="post" action="index.php?page=connexion">
+<form method="post" action="index.php?controller=utilisateur&function=connexion">
     <label>Nom d'utilisateur</label>
     <input type="text" name="nom_utilisateur" required>
 

@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../models/utilisateurModel.php';
 
-function utilisateurConnexionController(mysqli $connex): array
+function utilisateur_controller_connexion(array $request, mysqli $connex): array
 {
     $message = '';
 
@@ -19,9 +19,9 @@ function utilisateurConnexionController(mysqli $connex): array
             $_SESSION['nom'] = $utilisateur['nom'];
             $_SESSION['fingerPrint'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
-            header('Location: index.php?page=forum-accueil');
+            header('Location: index.php?controller=forum&function=accueil');
             exit;
-}
+        }
 
         $message = "Nom d'utilisateur ou mot de passe incorrect.";
     }
@@ -32,7 +32,7 @@ function utilisateurConnexionController(mysqli $connex): array
     ];
 }
 
-function utilisateurInscriptionController(mysqli $connex): array
+function utilisateur_controller_inscription(array $request, mysqli $connex): array
 {
     $message = '';
 
@@ -63,11 +63,11 @@ function utilisateurInscriptionController(mysqli $connex): array
     ];
 }
 
-function utilisateurDeconnexionController(): void
+function utilisateur_controller_deconnexion(array $request, mysqli $connex): array
 {
     session_unset();
     session_destroy();
 
-    header('Location: index.php?page=connexion');
+    header('Location: index.php?controller=utilisateur&function=connexion');
     exit;
 }
